@@ -35,7 +35,7 @@ public class BookController {
         }
 
         Author idAuthor = (Author) JOptionPane.showInputDialog(null,
-                "Insert Authors ID to search",
+                "Insert Authors ID ",
                 "",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -51,18 +51,16 @@ public class BookController {
         //Here we call the function made in the model to retrieve the id of the object, i.e. we take the data to fill the record, and then return certain values.
         objBook = (Book) objBookModel.insert(objBook);
 
-        JOptionPane.showMessageDialog(null, "Book:\n "+objBook.toString(),"Succesfull", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Book:\n "+objBook.bookInformation(),"Succesfull", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void getAllBooks(){
         BookModel objBookModel = new BookModel();
         String listBooks = "Books list \n";
-        System.out.println(objBookModel.findAll());
         for(Object iterator: objBookModel.findAll() ){
 
             Book objBook = (Book) iterator;
-            System.out.println("Book " + objBook.getPrice());
-            listBooks += objBook.toString() + "\n";
+            listBooks += objBook.bookInformation();
         }
 
         JOptionPane.showMessageDialog(null, listBooks);
@@ -83,7 +81,7 @@ public class BookController {
 
             Book objBook = (Book) iterator;
 
-            listBooks += objBook.toString() + "\n";
+            listBooks += objBook.bookInformation();
         }
 
         return listBooks;
@@ -95,14 +93,14 @@ public class BookController {
         String listBooks = "";
         listBooks = getAllBooks(listBooks);
 
-        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(null, listBooks + "\n Enter Author's id to delete"));
+        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(null, listBooks + "\n Enter Book's id to delete"));
 
         Book objBook = objBookModel.findById(idDelete);
 
         if(objBook == null){
-            JOptionPane.showMessageDialog(null,"Author not found");
+            JOptionPane.showMessageDialog(null,"Book not found");
         }else{
-            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure what to delete the Author?\n "+ objBook.toString());
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure what to delete the Author?\n "+ objBook.bookInformation());
             if (confirm == 0) objBookModel.delete(objBook);
         }
     }
@@ -150,21 +148,18 @@ public class BookController {
         if (BookList.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Book not found");
         } else {
-            String lista = "";
+            String list = "Coincidence with the title \" "+ name +" \" \n";
             for (Book Book : BookList) {
-                lista += Book.toString() + "\n";
+                list += Book.bookInformationbyTitle() + "\n";
             }
-            JOptionPane.showMessageDialog(null, "List Books \n"+ lista);
+            JOptionPane.showMessageDialog(null, "List Books \n"+ list);
         }
     }
 
     public static void searchById(){
         BookModel objBookModel = new BookModel();
 
-        String listBooks = "";
-        listBooks = getAllBooks(listBooks);
-
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, listBooks + "\n Enter Book's ID:"));
+        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Search by Book ID\n Enter Book's ID:"));
 
         Book objBook = objBookModel.findById(id);
 
@@ -203,11 +198,11 @@ public class BookController {
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 arrAuthor,
-                arrAuthor[0]);
+                arrAuthor[0].getName());
 
-        String listBooks = "LIST BOOKS BY TITTLE\n";
+        String listBooks = "LIST " +idSearch.getName() + " BOOKS \n";
         for (Book iterator:objBookModel.findByIdAuthor(idSearch.getId())){
-            listBooks += iterator.toString() + "\n";
+            listBooks += iterator.bookInformationbyAuthor() + "\n";
         }
         JOptionPane.showMessageDialog(null,listBooks);
     }

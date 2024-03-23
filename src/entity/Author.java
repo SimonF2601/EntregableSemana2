@@ -32,6 +32,16 @@ public class Author {
                 '}';
     }
 
+    public String information() {
+        return "ID: " + id + "\n" +
+               "Name: " + name + "\n" +
+               "Nationality: " + nationality;
+    }
+
+    public String listInformation() {
+        return "ID: "+ id + " - Name: " + name;
+    }
+
 
     //Getters and Setters
     public int getId() {

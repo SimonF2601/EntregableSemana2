@@ -15,24 +15,12 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, String title, String yearPublication, float price, int idAuthor, Author author) {
-        this.id = id;
-        this.title = title;
-        this.yearPublication = yearPublication;
-        this.price = price;
-        this.idAuthor = idAuthor;
-        this.author = author;
-    }
-
     public Book( String title, String yearPublication, float price, int idAuthor) {
         this.title = title;
         this.yearPublication = yearPublication;
         this.price = price;
         this.idAuthor = idAuthor;
     }
-
-
-
 //Methods
 
     @Override
@@ -41,7 +29,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", yearPublication='" + yearPublication + '\'' +
-                ", price=" + price +
+                ", price= boo" + price +
                 ", idAuthor=" + idAuthor +
                 '}';
     }
@@ -49,10 +37,28 @@ public class Book {
     public String bookInformationbyAuthor(){
         return "Book: " + title + "\n" +
                "Year Publication: " + yearPublication + "\n" +
-               "Price: " + price + "\n" +
+               "Price: $" + price + "\n" +
                "ID: " + id + "\n" +
                "___________________________________________________________________\n"    ;
 
+    }
+
+    /**
+     * The purpose of this function is to organize the information to be displayed in the query section by book title.
+    @return Returns a string representation of the book information depending on the title
+     **/
+    public String bookInformationbyTitle(){
+        return "Book: " + title + "\n" +
+               "Year Publication: " + yearPublication + "\n" +
+               "Price: $" + price + "\n" +
+               "ID: " + id + "\n" +
+               "Author: " + author.getName() + "\n" +
+               "___________________________________________________________________\n"    ;
+
+    }
+
+    public String bookInformation(){
+        return "▶ ID: " + id + "-  Bookname: " + title + " - Author: " + author.getName() + "\n" ;
     }
     //Getters and Setters
 

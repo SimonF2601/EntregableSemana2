@@ -287,7 +287,7 @@ public class BookModel implements CRUD {
 
         try{
             //3. Sentencia SQL
-            String sql ="SELECT * FROM book INNER JOIN author ;";
+            String sql ="SELECT * FROM  book INNER JOIN author ON book.id_author = author.id WHERE author.id = ?; ";
 
             //4. Preparar el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -302,14 +302,17 @@ public class BookModel implements CRUD {
             while(objResult.next()){//Definicion del next
 
                 objBook = new Book();
-                objBook.setId(objResult.getInt("id"));
-                objBook.setTitle(objResult.getString("title"));
-                objBook.setYearPublication(objResult.getString("year_publication"));
-                objBook.setPrice(objResult.getFloat("price"));
-                objBook.setIdAuthor(objResult.getInt("id_author"));
+                objBook.setId(objResult.getInt("book.id"));
+                objBook.setTitle(objResult.getString("book.title"));
+                objBook.setYearPublication(objResult.getString("book.year_publication"));
+                objBook.setPrice(objResult.getFloat("book.price"));
+                objBook.setIdAuthor(objResult.getInt("book.id_author"));
 
                 //Llenar el objeto Author para ingresar al objeto del libro
-                Author objAuthor = objAuthorModel.findById(objBook.getIdAuthor());
+                Author objAuthor = new Author();
+                objAuthor.setId(objBook.getIdAuthor());
+                objAuthor.setName(objResult.getString("author.name"));
+                objAuthor.setNationality(objResult.getString("author.nationality"));
                 objBook.setAuthor(objAuthor);
 
                 BookList.add(objBook);

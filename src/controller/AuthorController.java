@@ -22,9 +22,13 @@ public class AuthorController {
         //Here we call the function made in the model to retrieve the id of the object, i.e. we take the data to fill the record, and then return certain values.
         objAuthor = (Author) objAuthorModel.insert(objAuthor);
 
-        JOptionPane.showMessageDialog(null, "Author:\n "+objAuthor.toString(),"Succesfull", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "New Author's Data:\n "+objAuthor.information(),"Succesfull", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * This method has the function of
+     * print all the records in a JOPtionPane message.
+     */
     public static void getAllAuthors(){
         AuthorModel objAuthorModel = new AuthorModel();
         String listAuthors = "Author list \n";
@@ -33,7 +37,7 @@ public class AuthorController {
 
             Author objAuthor = (Author) iterator;
 
-            listAuthors += objAuthor.toString() + "\n";
+            listAuthors += objAuthor.listInformation() + "\n";
         }
 
         JOptionPane.showMessageDialog(null, listAuthors);
@@ -41,10 +45,10 @@ public class AuthorController {
     }
 
     /**
-     * Este metodo tiene como funcion el
-     * obtener todos los registros en una cadena en forma de listado.
-     * @param listAuthors es una cadena que guardara la lista de los autores
-     * @return Lista con la información de los autores
+     * This method has the function of
+     * get all the records in a string in the form of a list.
+     * @param listAuthors is a string that will store the list of authors.
+     * @return List with the authors information.
      */
     public static String getAllAuthors(String listAuthors){
         AuthorModel objAuthorModel = new AuthorModel();
@@ -54,20 +58,16 @@ public class AuthorController {
 
             Author objAuthor = (Author) iterator;
 
-            listAuthors += objAuthor.toString() + "\n";
+            listAuthors += "• " +objAuthor.listInformation() + "\n";
         }
 
         return listAuthors;
     }
 
-    //TODO  Organizar logica
     public static void searchById(){
         AuthorModel objAuthorModel = new AuthorModel();
 
-        String listAuthors = "";
-        listAuthors = getAllAuthors(listAuthors);
-
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, listAuthors + "\n Enter Author's ID:"));
+        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Seacrh by Author ID\n Enter Author's ID:"));
 
           Author objAuthor = objAuthorModel.findById(id);
 
@@ -97,7 +97,7 @@ public class AuthorController {
         if(objAuthor == null){
             JOptionPane.showMessageDialog(null,"Author not found");
         }else{
-            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure what to delete the Author?\n "+ objAuthor.toString());
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure what to delete the Author?\n "+ objAuthor.information());
             if (confirm == 0) objAuthorModel.delete(objAuthor);
         }
     }
@@ -120,12 +120,10 @@ public class AuthorController {
             String name = JOptionPane.showInputDialog(null, "Enter new name:" , objAuthor.getName());
             String nationality = JOptionPane.showInputDialog(null, "Enter new nationality:" , objAuthor.getNationality());
 
-
             objAuthor.setName(name);
             objAuthor.setNationality(nationality);
             objAuthorModel.update(objAuthor);
 
-//            JOptionPane.showMessageDialog(null, "Author successfully updated");
         }
 
 
